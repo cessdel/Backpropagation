@@ -93,6 +93,12 @@ print(f"Final centroids: {final_centroids}")
 # Gráfico de centroides iniciales
 axes[0].scatter(X_train[:, 0], X_train[:, 1], c='gray', alpha=0.5, label='Puntos de datos')
 axes[0].scatter(initial_centroids[:, 0], initial_centroids[:, 1], c='red', marker='x', s=100, label='Centroides Iniciales')
+
+for i, centroid in enumerate(initial_centroids):
+    x, y = centroid[:2]  # Tomar solo las dos primeras coordenadas
+    axes[0].annotate(str(i), (x, y), textcoords="offset points", xytext=(5,5), ha='center', 
+                    fontsize=12, color='black', fontweight='bold')
+
 axes[0].set_xlabel('Sepal length')
 axes[0].set_ylabel('Sepal width')
 axes[0].set_title('Centroides Iniciales')
@@ -101,10 +107,18 @@ axes[0].legend()
 # Gráfico de centroides finales
 axes[1].scatter(X_train[:, 0], X_train[:, 1], c=labels, cmap='viridis', alpha=0.6, label='Puntos de datos')
 axes[1].scatter(final_centroids[:, 0], final_centroids[:, 1], c='red', marker='x', s=100, label='Centroides Finales')
+
+# Agregar etiquetas a los centroides
+for i, centroid in enumerate(final_centroids):
+    x, y = centroid[:2]  # Tomar solo las dos primeras coordenadas si hay más dimensiones
+    axes[1].annotate(str(i), (x, y), textcoords="offset points", xytext=(5,5), ha='center', 
+                    fontsize=12, color='black', fontweight='bold')
+
 axes[1].set_xlabel('Sepal length')
 axes[1].set_ylabel('Sepal width')
 axes[1].set_title('Centroides Finales')
 axes[1].legend()
+
 
 plt.suptitle('Comparación de Centroides Iniciales y Finales en K-Means')
 plt.show()
@@ -112,9 +126,7 @@ plt.show()
 #------------------------------------------ base radial ------------------------------------------
 from sklearn.preprocessing import OneHotEncoder
 
-def gaussian_function(X, centers, sigma):
-    """Calcula la activación de la capa intermedia usando funciones de base radial."""
-    return np.exp(-np.linalg.norm(X[:, np.newaxis] - centers, axis=2) ** 2 / (2 * sigma ** 2))
+
 
 def initialize_weights(input_size, output_size):
     """Inicializa los pesos de manera uniforme en el rango [-1,1]."""
