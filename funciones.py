@@ -11,6 +11,14 @@ def sphere(x, debug=False):
 
     return suma
 
+def sigmoid(x):
+    x = np.clip(x, -500, 500)  # Limita los valores extremos para evitar overflow
+    return 1 / (1 + np.exp(-x))
+
+
+def sigmoid_derivative(x):
+    return x * (1 - x)
+
 def rastrigin(x):
     """Función Rastrigin: muchas oscilaciones, mínimo global en el origen"""
     A = 10
@@ -29,3 +37,15 @@ def ackley(x):
     sum1 = np.sum(x**2)
     sum2 = np.sum(np.cos(c * x))
     return -a * np.exp(-b * np.sqrt(sum1 / d)) - np.exp(sum2 / d) + a + np.exp(1)
+
+def mse(y_true, y_pred, debug=False):
+    """Error Cuadrático Medio (MSE)"""
+    error = np.mean((y_true - y_pred) ** 2)
+    
+    if debug:
+        print(f"\nCalculando MSE:")
+        print(f"Valores reales: {y_true}")
+        print(f"Valores predichos: {y_pred}")
+        print(f"Error cuadrático medio: {error}")
+
+    return error

@@ -9,18 +9,18 @@ from scipy import stats
 # Parámetros de la evolución diferencial
 N = 30  # Tamaño de la población
 dim = 10  # Dimensión de cada individuo
-X_min = -1 * np.ones(dim)  # Rango mínimo
-X_max = 1 * np.ones(dim)  # Rango máximo
+X_min = -5 * np.ones(dim)  # Rango mínimo
+X_max = 5 * np.ones(dim)  # Rango máximo
 # X_min = -5 * np.ones(dim) #Para la funcion Rosenbrock
 # X_max = 10 * np.ones(dim) #Para la función Rosenbrock
 
 # Parámetros de evolución diferencial
-F = 0.9  # Factor de escala
-CR = 0.8  # Tasa de cruza
+F = 1  # Factor de escala
+CR = 0.9  # Tasa de cruza
 generaciones = 1000*dim  # Número de generaciones
 
 # Número de repeticiones del experimento
-num_experimentos = 35
+num_experimentos = 1
 mejores_por_experimento = [] #mejor fitness de cada experimento
 tiempos_de_ejecucion = [] # Almacena los tiempos de ejecución de cada experimento
 
@@ -37,7 +37,7 @@ for exp in range(num_experimentos):
     population = np.random.uniform(X_min, X_max, (N, dim))
 
     # Calcular fitness inicial
-    fitness = np.array([rastrigin(individuo) for individuo in population])
+    fitness = np.array([rosenbrock(individuo) for individuo in population])
 
     mejores_por_gen = []
 
@@ -57,7 +57,7 @@ for exp in range(num_experimentos):
                     trial[j] = X_m[j]
 
             # === EVALUACIÓN ===
-            f_trial = rastrigin(trial)
+            f_trial = rosenbrock(trial)
 
             # === SELECCIÓN ===
             if f_trial < fitness[i]:
